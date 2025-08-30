@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Check-in ❤️</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for a cute, rounded font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Applying the cute font to the whole page */
+      body {
+        font-family: "Nunito", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-pink-50 flex items-center justify-center min-h-screen p-4">
+    <!-- Main container card -->
+    <div
+      id="main-card"
+      class="bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center w-full max-w-lg transform transition-all duration-500"
+    >
+      <!-- Food Question Section -->
+      <div id="food-question-section">
+        <div class="text-5xl mb-4 animate-bounce">🥗</div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6">
+          Have you had your food?
+        </h1>
+        <div class="flex justify-center space-x-4">
+          <button
+            id="food-yes"
+            class="px-8 py-3 bg-green-400 text-white font-bold rounded-full shadow-md hover:bg-green-500 transform hover:scale-105 transition-transform duration-200"
+          >
+            Yes!
+          </button>
+          <button
+            id="food-no"
+            class="px-8 py-3 bg-red-400 text-white font-bold rounded-full shadow-md hover:bg-red-500 transform hover:scale-105 transition-transform duration-200"
+          >
+            Not yet
+          </button>
+        </div>
+      </div>
+
+      <!-- Medicine Question Section (Initially Hidden) -->
+      <div id="medicine-question-section" class="hidden">
+        <div class="text-5xl mb-4 animate-bounce">💊</div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-700 mb-6">
+          That's great! Did you take your medicine?
+        </h1>
+        <div class="flex justify-center space-x-4">
+          <button
+            id="med-yes"
+            class="px-8 py-3 bg-green-400 text-white font-bold rounded-full shadow-md hover:bg-green-500 transform hover:scale-105 transition-transform duration-200"
+          >
+            Yes, I did!
+          </button>
+          <button
+            id="med-no"
+            class="px-8 py-3 bg-red-400 text-white font-bold rounded-full shadow-md hover:bg-red-500 transform hover:scale-105 transition-transform duration-200"
+          >
+            Oh, not yet
+          </button>
+        </div>
+      </div>
+
+      <!-- Message Display Section (Initially Hidden) -->
+      <div id="message-section" class="hidden">
+        <div id="message-emoji" class="text-5xl mb-4"></div>
+        <p
+          id="message-text"
+          class="text-xl md:text-2xl font-bold text-gray-700"
+        ></p>
+        <button
+          id="restart-button"
+          class="mt-8 px-6 py-2 bg-purple-400 text-white font-semibold rounded-full shadow-md hover:bg-purple-500 transform hover:scale-105 transition-transform duration-200"
+        >
+          Start Over
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Get references to all the interactive elements
+      const foodSection = document.getElementById("food-question-section");
+      const medicineSection = document.getElementById(
+        "medicine-question-section"
+      );
+      const messageSection = document.getElementById("message-section");
+      const messageEmoji = document.getElementById("message-emoji");
+      const messageText = document.getElementById("message-text");
+
+      const foodYesBtn = document.getElementById("food-yes");
+      const foodNoBtn = document.getElementById("food-no");
+      const medYesBtn = document.getElementById("med-yes");
+      const medNoBtn = document.getElementById("med-no");
+      const restartBtn = document.getElementById("restart-button");
+
+      // Function to smoothly hide one section and show another
+      function switchSections(hide, show) {
+        hide.classList.add("hidden");
+        show.classList.remove("hidden");
+      }
+
+      // Function to display the final message
+      function showMessage(emoji, text) {
+        foodSection.classList.add("hidden");
+        medicineSection.classList.add("hidden");
+
+        messageEmoji.textContent = emoji;
+        messageText.textContent = text;
+        messageSection.classList.remove("hidden");
+      }
+
+      // --- Event Listeners ---
+
+      // User clicks "Yes" for food
+      foodYesBtn.addEventListener("click", () => {
+        switchSections(foodSection, medicineSection);
+      });
+
+      // User clicks "No" for food
+      foodNoBtn.addEventListener("click", () => {
+        showMessage(
+          "😥",
+          "Please eat something nourishing first. Taking care of your body is super important! 💕"
+        );
+      });
+
+      // User clicks "Yes" for medicine
+      medYesBtn.addEventListener("click", () => {
+        showMessage(
+          "🎉",
+          "Awesome! You are doing an amazing job taking care of yourself. Keep it up! ✨"
+        );
+        restartBtn.textContent = "Take Care! ❤️";
+      });
+
+      // User clicks "No" for medicine
+      medNoBtn.addEventListener("click", () => {
+        showMessage(
+          "🔔",
+          "Just a friendly reminder to take your medicine. Your health is a priority! 💖"
+        );
+        restartBtn.textContent = "Thanks!";
+      });
+
+      // User clicks "Start Over" or the new message button
+      restartBtn.addEventListener("click", () => {
+        switchSections(messageSection, foodSection);
+        // Reset the button text for the next time
+        restartBtn.textContent = "Start Over";
+      });
+    </script>
+  </body>
+</html>
